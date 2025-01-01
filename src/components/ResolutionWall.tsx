@@ -43,11 +43,6 @@ const ResolutionWall = () => {
     }
   };
 
-  const shareResolution = (resolution: string) => {
-    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(resolution)}`;
-    window.open(url, '_blank');
-  };
-
   return (
     <div className="w-full max-w-4xl mx-auto mt-12 px-4">
       <form onSubmit={handleSubmit} className="mb-8 space-y-4">
@@ -56,18 +51,18 @@ const ResolutionWall = () => {
           value={newResolution}
           onChange={(e) => setNewResolution(e.target.value)}
           placeholder="Share your New Year's resolution..."
-          className="w-full p-3 rounded-lg bg-white/10 border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+          className="w-full p-3 rounded-lg bg-white/10 border border-white/20 text-white"
         />
         <input
           type="text"
           value={authorName}
           onChange={(e) => setAuthorName(e.target.value)}
           placeholder="Your name (optional)"
-          className="w-full p-3 rounded-lg bg-white/10 border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+          className="w-full p-3 rounded-lg bg-white/10 border border-white/20 text-white"
         />
         <button
           type="submit"
-          className="w-full p-3 rounded-lg bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold transition-colors hover:opacity-80"
+          className="w-full p-3 rounded-lg bg-primary hover:bg-primary/80 text-white font-semibold transition-colors"
         >
           Share Resolution
         </button>
@@ -81,16 +76,10 @@ const ResolutionWall = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
           >
-            <Card className="bg-white/10 border-white/20 rounded-lg shadow-lg transition-transform transform hover:scale-105">
+            <Card className="bg-white/10 border-white/20">
               <CardContent className="p-4">
                 <p className="text-white mb-2">{resolution.resolution}</p>
-                <p className="text-sm text-white">- {resolution.author_name}</p>
-                <button
-                  onClick={() => shareResolution(resolution.resolution)}
-                  className="mt-2 text-blue-400 hover:underline"
-                >
-                  Share on Twitter
-                </button>
+                <p className="text-sm text-secondary-foreground">- {resolution.author_name}</p>
               </CardContent>
             </Card>
           </motion.div>
