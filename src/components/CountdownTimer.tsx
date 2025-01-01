@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Confetti from 'react-confetti';
+import QRCode from 'qrcode.react';
+import { supabase } from "@/integrations/supabase/client";
 
 interface TimeLeft {
   days: number;
@@ -30,6 +32,9 @@ const CountdownTimer = () => {
   const [isCelebrating, setIsCelebrating] = useState(false);
   const [confettiCount, setConfettiCount] = useState(0);
   const [showMessage, setShowMessage] = useState(false);
+  const [visitorCount, setVisitorCount] = useState(0);
+
+  const celebrationSound = new Audio('/path/to/celebration.mp3');
 
   useEffect(() => {
     const calculateTimeLeft = () => {
@@ -39,6 +44,7 @@ const CountdownTimer = () => {
 
       if (difference <= 0) {
         setIsCelebrating(true);
+        celebrationSound.play(); // Play the sound
         setShowMessage(true);
         setConfettiCount(10); // Limit confetti count
       } else {
@@ -66,6 +72,37 @@ const CountdownTimer = () => {
     if (now >= resetDate) {
       setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 }); // Reset the counter
     }
+  }, []);
+
+  useEffect(() => {
+    const trackVisitor = async () => {
+      const { error } = await supabase
+        .from('visitors')
+        .insert([{ timestamp: new Date() }]); // Insert a new visitor record
+
+      if (error) {
+        console.error('Error tracking visitor:', error);
+      }
+    };
+
+    trackVisitor();
+  }, []); // Run once on component mount
+
+  // Fetch visitor count
+  const fetchVisitorCount = async () => {
+    const { data, error } = await supabase
+      .from('visitors')
+      .select('*', { count: 'exact' });
+
+    if (error) {
+      console.error('Error fetching visitor count:', error);
+    } else {
+      setVisitorCount(data.length); // Set the visitor count
+    }
+  };
+
+  useEffect(() => {
+    fetchVisitorCount();
   }, []);
 
   const TimeUnit = ({ value, prevValue, label }: { value: number; prevValue: number; label: string }) => (
@@ -129,6 +166,8 @@ const CountdownTimer = () => {
           }}
         />
       ))} */}
+      {/* <QRCode value="https://yourwebsite.com/countdown" /> */}
+      <div className="visitor-count">Current Visitors: {visitorCount}</div>
     </div>
   );
 };
