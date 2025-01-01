@@ -1,8 +1,16 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-const ThemeContext = createContext({});
+interface ThemeContextType {
+  theme: string;
+  setTheme: (theme: string) => void;
+}
 
-export const ThemeProvider = ({ children }) => {
+const ThemeContext = createContext<ThemeContextType>({
+  theme: 'dark',
+  setTheme: () => null,
+});
+
+export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [theme, setTheme] = useState('dark');
 
   useEffect(() => {
@@ -10,11 +18,10 @@ export const ThemeProvider = ({ children }) => {
   }, [theme]);
 
   return (
-    <ThemeContext.Provider value={{ theme }}>
+    <ThemeContext.Provider value={{ theme, setTheme }}>
       {children}
     </ThemeContext.Provider>
   );
 };
 
 export const useTheme = () => useContext(ThemeContext);
-

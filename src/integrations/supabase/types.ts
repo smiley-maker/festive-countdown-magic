@@ -30,6 +30,21 @@ export type Database = {
         }
         Relationships: []
       }
+      visitors: {
+        Row: {
+          id: number
+          timestamp: string
+        }
+        Insert: {
+          id?: number
+          timestamp?: string
+        }
+        Update: {
+          id?: number
+          timestamp?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
