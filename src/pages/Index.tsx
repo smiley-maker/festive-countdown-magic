@@ -1,12 +1,18 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import React from 'react';
+import CountdownTimer from '../components/CountdownTimer';
+import Particles from '../components/Particles';
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-[#1A1F2C] flex flex-col items-center justify-center p-4">
+      <Particles />
+      <h1 className="text-4xl md:text-6xl font-bold text-white mb-12 text-center">
+        New Year Countdown
+      </h1>
+      <CountdownTimer />
+      <p className="text-secondary mt-12 text-center">
+        Counting down to {new Date().getFullYear() + 1}
+      </p>
     </div>
   );
 };
