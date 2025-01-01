@@ -43,11 +43,6 @@ const ResolutionWall = () => {
     }
   };
 
-  const shareResolution = (resolution: string) => {
-    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(resolution)}`;
-    window.open(url, '_blank');
-  };
-
   return (
     <div className="w-full max-w-4xl mx-auto mt-12 px-4">
       <form onSubmit={handleSubmit} className="mb-8 space-y-4">
@@ -85,12 +80,6 @@ const ResolutionWall = () => {
               <CardContent className="p-4">
                 <p className="text-white mb-2">{resolution.resolution}</p>
                 <p className="text-sm text-white">- {resolution.author_name}</p>
-                <button
-                  onClick={() => shareResolution(resolution.resolution)}
-                  className="mt-2 text-blue-400 hover:underline"
-                >
-                  Share on Twitter
-                </button>
               </CardContent>
             </Card>
           </motion.div>
