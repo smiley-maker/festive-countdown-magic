@@ -96,6 +96,18 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-gray-900 text-white;
   }
+
+  body.light {
+    @apply bg-white text-black;
+  }
+}
+
+body {
+  @apply bg-gray-900 text-white;
+}
+
+body.light {
+  @apply bg-white text-black;
 }
